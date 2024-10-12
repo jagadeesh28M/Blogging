@@ -56,7 +56,8 @@ userRouter.post('/signin', async (c) => {
     }  
     const user = await prisma.user.findUnique({
       where: {
-          username: body.username
+          username: body.username,
+          password: body.password
       }
   });
 
@@ -66,5 +67,6 @@ userRouter.post('/signin', async (c) => {
   }
 
   const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-  return c.json({ jwt });
-})
+  return c.json({
+    "jwt" : jwt
+  });})
